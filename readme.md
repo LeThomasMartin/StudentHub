@@ -1,1 +1,1 @@
-A hub for physio student ULaval
+﻿# StudentHub\n\nProject overview and documentation entry point.\n
