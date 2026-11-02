@@ -21,6 +21,7 @@ L'application vise à regrouper :
 - [docs/AI_GUIDELINES.md](./docs/AI_GUIDELINES.md) — règles de travail avec les IA
 - [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md) — configuration et workflow de développement
 - [docs/CHANGELOG.md](./docs/CHANGELOG.md) — historique des modifications
+- [docs/TECH_STACK.md](./docs/TECH_STACK.md) — décisions technologiques et ordre de livraison
 
 ## Objectif du projet
 
