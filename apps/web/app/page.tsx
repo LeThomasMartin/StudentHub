@@ -86,14 +86,6 @@ export default function HomePage() {
       <section className="main-panel">
         <header className="topbar">
           <span className="breadcrumb">Espace étudiant <span>/</span> Vue d’ensemble</span>
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="Ouvrir les paramètres"
-            onClick={() => setSettingsOpen((current) => !current)}
-          >
-            ⚙
-          </button>
         </header>
         <div className="content">
           <div className="welcome">
@@ -128,7 +120,6 @@ export default function HomePage() {
             </div>
             <button className="primary-button">Ajouter un cours <span>＋</span></button>
           </section>
-          <footer>Fait pour t’aider à apprendre, pas pour te presser. <span>♡</span></footer>
         </div>
       </section>
     </main>

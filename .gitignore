@@ -32,6 +32,7 @@ pnpm-debug.log*
 uploads/
 storage/
 models/
+/packages/database/generated/
 
 # Local tooling state
 /rtk/

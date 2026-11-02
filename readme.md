@@ -18,6 +18,7 @@ L'application vise à regrouper :
 - [docs/PROJECT_PLAN.md](./docs/PROJECT_PLAN.md) — plan directeur et phases de développement
 - [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) — architecture technique
 - [docs/DATABASE.md](./docs/DATABASE.md) — schéma de données
+- [docs/PRISMA_SETUP.md](./docs/PRISMA_SETUP.md) — configuration et connexion PostgreSQL
 - [docs/AI_GUIDELINES.md](./docs/AI_GUIDELINES.md) — règles de travail avec les IA
 - [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md) — configuration et workflow de développement
 - [docs/CHANGELOG.md](./docs/CHANGELOG.md) — historique des modifications

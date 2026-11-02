@@ -1,5 +1,15 @@
 ﻿# Base de données StudentHub
 
+## État de l'implémentation
+
+Les premiers modèles Prisma implémentés sont `Semester` et `Course`. Un
+semestre possède plusieurs cours; chaque cours doit référencer exactement un
+semestre. Les dates de semestre sont stockées comme dates PostgreSQL (`DATE`),
+les identifiants sont des UUID, et les noms de tables/colonnes suivent la
+convention SQL snake_case. La migration initiale est
+`add_semester_and_course`. Les autres entités décrites ci-dessous restent
+planifiées et ne sont pas encore présentes dans le schéma Prisma.
+
 ## 1. Objectif
 
 La base de données doit stocker les informations universitaires, les documents, les annotations, les éléments d'apprentissage et les conversations IA de façon fiable, structurée et évolutive.

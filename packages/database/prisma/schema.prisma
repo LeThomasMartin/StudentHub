@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Semester {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  startDate DateTime @db.Date @map("start_date")
+  endDate   DateTime @db.Date @map("end_date")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  courses Course[]
+
+  @@map("semesters")
+}
+
+model Course {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  code        String?
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  semesterId  String   @db.Uuid @map("semester_id")
+  semester    Semester @relation(fields: [semesterId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@index([semesterId])
+  @@map("courses")
+}
