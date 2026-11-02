@@ -1,6 +1,6 @@
 ﻿# Journal des modifications
 
-## Non publiée
+## Publiée
 
 - Ajout des modèles Prisma `Semester` et `Course`, avec relation obligatoire un-à-plusieurs, UUID, dates PostgreSQL et conventions snake_case.
 - Création et application de la migration `20261102221448_add_semester_and_course`; génération de Prisma Client 7.10.1.
@@ -20,3 +20,5 @@
 - Initialisation de la structure du projet.
 - Ajout de la documentation de référence : plan directeur, architecture, base de données, directives IA et développement.
 - Mise en place de l'organisation du dépôt et des dossiers de travail principaux.
+
+ajout du script magicTape.py devras être intégré plus tard
