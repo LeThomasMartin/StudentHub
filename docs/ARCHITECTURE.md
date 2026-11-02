@@ -1,5 +1,8 @@
 # Architecture technique de StudentHub
 
+> Mise à jour de fondation : voir `TECH_STACK.md` pour les choix retenus,
+> différés et l'ordre de livraison.
+
 ## 1. Vue d'ensemble
 
 StudentHub est une application web centrée sur l'organisation étudiante et l'apprentissage personnel. Elle associe une interface web moderne, une base de données fiable, un système documentaire central, et un assistant IA local capable de répondre à partir des documents de l'utilisateur.

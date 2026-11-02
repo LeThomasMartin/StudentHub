@@ -1,1 +1,24 @@
-﻿{\n  "name": "studenthub",\n  "private": true,\n  "version": "0.1.0"\n}\n
+{
+  "name": "studenthub",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.0.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @studenthub/web dev",
+    "build": "pnpm --filter @studenthub/web build",
+    "start": "pnpm --filter @studenthub/web start",
+    "typecheck": "tsc --noEmit -p apps/web/tsconfig.json",
+    "test": "vitest run --passWithNoTests",
+    "db:generate": "pnpm --filter @studenthub/database prisma:generate",
+    "db:migrate": "pnpm --filter @studenthub/database prisma:migrate"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "eslint": "^9.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0"
+  }
+}
