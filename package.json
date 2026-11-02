@@ -10,6 +10,7 @@
     "dev": "pnpm --filter @studenthub/web dev",
     "build": "pnpm --filter @studenthub/web build",
     "start": "pnpm --filter @studenthub/web start",
+    "lint": "pnpm --filter @studenthub/web lint",
     "typecheck": "tsc --noEmit -p apps/web/tsconfig.json",
     "test": "vitest run --passWithNoTests",
     "db:generate": "pnpm --filter @studenthub/database prisma:generate",
@@ -17,7 +18,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "eslint": "^9.0.0",
+    "eslint": "^8.57.1",
     "typescript": "^5.7.0",
     "vitest": "^2.1.0"
   },

@@ -3,6 +3,10 @@
     "target": "ES2022",
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["apps/web/*"]
+    },
     "noEmit": true,
     "skipLibCheck": true,
     "module": "ESNext",
@@ -13,6 +17,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": ["apps/**/*.ts", "apps/**/*.tsx", "packages/**/*.ts", "tests/**/*.ts", "vitest.config.ts"],
+  "include": ["apps/**/*.ts", "apps/**/*.tsx", "packages/**/*.ts", "tests/**/*.ts", "vitest.config.mts"],
   "exclude": ["node_modules"]
 }

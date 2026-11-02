@@ -2,6 +2,11 @@
 
 ## Publiée
 
+- Ajout du module Cours : liste regroupée par semestre, création, modification et suppression avec confirmation.
+- Ajout de la création de semestre avec validation des dates et intégration à la liste des cours.
+- Ajout d'endpoints API serveur utilisant Prisma et validation Zod des entrées.
+- Ajout d'états de chargement, d'erreur et de listes vides, avec tests de schémas et de service.
+- Ajout de Zod, de lint Next.js et de l'exposition du package de base de données au web.
 - Ajout des modèles Prisma `Semester` et `Course`, avec relation obligatoire un-à-plusieurs, UUID, dates PostgreSQL et conventions snake_case.
 - Création et application de la migration `20261102221448_add_semester_and_course`; génération de Prisma Client 7.10.1.
 - Préparation de Prisma ORM 7 dans `packages/database` avec PostgreSQL, configuration centralisée et client utilisant l'adaptateur `pg`.

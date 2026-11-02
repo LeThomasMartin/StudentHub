@@ -139,7 +139,7 @@ button { font: inherit; }
   right: 0;
   bottom: 42px;
   width: 220px;
-  background: #11171c;
+  background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
@@ -178,7 +178,7 @@ button { font: inherit; }
 }
 
 .toggle.is-on {
-  background: #111418;
+  background: #526b7a;
 }
 
 .toggle-knob {
@@ -383,8 +383,8 @@ button { font: inherit; }
   border: 0;
   border-radius: 8px;
   padding: 10px 13px;
-  background: #edf2f5;
-  color: #111418;
+  background: var(--button);
+  color: var(--panel);
   font-size: 11px;
   white-space: nowrap;
   cursor: pointer;

@@ -1,5 +1,10 @@
+import { config as loadEnv } from "dotenv";
+import { resolve } from "node:path";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/client/client";
+
+// The web app and this workspace package both run two levels below the repo root.
+loadEnv({ path: resolve(process.cwd(), "../../.env") });
 
 const connectionString = process.env.DATABASE_URL;
 

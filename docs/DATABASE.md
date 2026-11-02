@@ -9,6 +9,8 @@ les identifiants sont des UUID, et les noms de tables/colonnes suivent la
 convention SQL snake_case. La migration initiale est
 `add_semester_and_course`. Les autres entités décrites ci-dessous restent
 planifiées et ne sont pas encore présentes dans le schéma Prisma.
+La création de semestre est disponible depuis le module Cours; les dates sont
+validées et la date de fin ne peut précéder la date de début.
 
 ## 1. Objectif
 
@@ -31,26 +33,24 @@ La base de données doit stocker les informations universitaires, les documents,
 - createdAt
 - updatedAt
 
-### Course
+### Course (implémenté)
 
-- id
-- userId
-- code
+- id (UUID)
 - name
-- semesterId
-- professor
-- color
-- archived
+- code (facultatif)
+- description (facultative)
+- semesterId (UUID, obligatoire)
 - createdAt
+- updatedAt
 
-### Semester
+### Semester (implémenté)
 
-- id
-- userId
-- label
+- id (UUID)
+- name
 - startDate
 - endDate
-- current
+- createdAt
+- updatedAt
 
 ### ScheduleEvent
 

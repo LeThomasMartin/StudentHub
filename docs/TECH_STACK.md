@@ -12,7 +12,7 @@ testables localement et introduits quand une fonctionnalité en dépend.
 | Monorepo | pnpm workspaces | Retenu; dépendances et packages contrôlés. |
 | Web | Next.js App Router, React | Retenu; interface responsive et serveur intégré. |
 | UI | CSS natif au départ; Tailwind à décider avec le design system | Évite une dépendance visuelle prématurée. |
-| Validation | Zod | À ajouter avec les premières entrées API/formulaires. |
+| Validation | Zod | Retenu et utilisé pour valider les entrées du module Cours. |
 | Base | PostgreSQL | Retenu pour relations et évolution vers pgvector. |
 | ORM/migrations | Prisma | Retenu provisoirement; valider pgvector avant le RAG. |
 | Auth | Auth.js | À introduire avec le premier flux utilisateur persistant. |
