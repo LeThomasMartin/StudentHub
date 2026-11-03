@@ -24,4 +24,11 @@ export const semesterRepository: SemesterRepository = {
       endDate: semester.endDate.toISOString().slice(0, 10),
     };
   },
+
+  async deleteIfEmpty(id): Promise<boolean> {
+    const result = await prisma.semester.deleteMany({
+      where: { id, courses: { none: {} } },
+    });
+    return result.count > 0;
+  },
 };

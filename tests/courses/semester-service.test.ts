@@ -18,6 +18,7 @@ describe("semester service", () => {
     };
     const repository: SemesterRepository = {
       create: vi.fn(async () => createdSemester),
+      deleteIfEmpty: vi.fn(async () => false),
     };
 
     await expect(createSemester(input, repository)).resolves.toEqual(createdSemester);

@@ -27,6 +27,25 @@
 .courses-summary { margin: 29px 0 13px; color: var(--muted); font-size: 12px; }
 .courses-summary > span:first-child { color: var(--ink); font-weight: 700; }
 .summary-divider { padding: 0 9px; }
+.course-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 420px);
+  min-height: 42px;
+  margin: 0 0 20px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+  color: var(--muted);
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.course-search:focus-within { border-color: var(--muted); box-shadow: 0 0 0 3px var(--shadow); }
+.course-search > span { font-size: 20px; line-height: 1; }
+.course-search input { width: 100%; border: 0; outline: 0; background: transparent; color: var(--ink); font: 400 12px "DM Sans", sans-serif; }
+.course-search input::placeholder { color: var(--muted); }
+.course-search button { flex: none; border: 0; background: transparent; color: var(--text-soft); cursor: pointer; font-size: 11px; }
 
 .courses-alert {
   margin: 16px 0;
@@ -97,7 +116,11 @@
   border: 1px solid var(--line);
   border-radius: 13px;
   box-shadow: 0 8px 20px var(--shadow);
+  animation: course-enter .28s ease both;
 }
+.semester-card:nth-child(2) { animation-delay: .04s; }
+.semester-card:nth-child(3) { animation-delay: .08s; }
+.semester-heading-actions { display: flex; align-items: center; gap: 8px; }
 .semester-heading {
   display: flex;
   justify-content: space-between;
@@ -159,6 +182,8 @@
   font-size: 10px;
 }
 .course-action:hover { border-color: var(--line); background: var(--canvas); color: var(--ink); }
+.course-action { transition: color .16s ease, background .16s ease, border-color .16s ease, transform .16s ease; }
+.course-action:active { transform: scale(.97); }
 .course-action:disabled { opacity: .5; cursor: wait; }
 .course-delete:hover { color: #a34e42; }
 
@@ -230,6 +255,17 @@
   font-size: 11px;
 }
 .secondary-button:disabled { opacity: .5; cursor: wait; }
+.secondary-button { transition: background .16s ease, color .16s ease, border-color .16s ease, transform .16s ease; }
+.secondary-button:hover:not(:disabled) { background: var(--panel-alt); color: var(--ink); border-color: var(--muted); }
+.secondary-button:active:not(:disabled), .primary-button:active:not(:disabled) { transform: translateY(1px); }
+.primary-button { transition: background .16s ease, transform .16s ease, opacity .16s ease; }
+.primary-button:hover:not(:disabled) { background: var(--button-strong); }
+.primary-button:focus-visible, .secondary-button:focus-visible, .course-action:focus-visible,
+.modal-close:focus-visible, .course-search button:focus-visible { outline: 2px solid var(--muted); outline-offset: 2px; }
+@keyframes course-enter { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
 .course-form-actions .primary-button:disabled { opacity: .6; cursor: wait; }
 
 @media (max-width: 850px) {
@@ -242,6 +278,7 @@
   .courses-intro h1 { font-size: 29px; }
   .courses-summary { margin-top: 22px; }
   .semester-heading { padding: 17px; }
+  .semester-heading-actions { align-items: flex-end; flex-direction: column; gap: 5px; }
   .course-list { padding: 0 16px; }
   .course-row { flex-wrap: wrap; }
   .course-actions { width: 100%; padding-left: 48px; }

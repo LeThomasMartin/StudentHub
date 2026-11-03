@@ -60,6 +60,8 @@ export function CourseManager() {
   const [isSaving, setIsSaving] = useState(false);
   const [isSavingSemester, setIsSavingSemester] = useState(false);
   const [deletingCourseId, setDeletingCourseId] = useState<string | null>(null);
+  const [deletingSemesterId, setDeletingSemesterId] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
   const [pageError, setPageError] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const [semesterFormError, setSemesterFormError] = useState<string | null>(null);
@@ -208,6 +210,40 @@ export function CourseManager() {
     }
   }
 
+  async function handleDeleteSemester(semester: SemesterCourseGroup) {
+    if (semester.courses.length > 0) return;
+    if (!window.confirm(`Supprimer la session « ${semester.name} » ?`)) return;
+
+    setDeletingSemesterId(semester.id);
+    setPageError(null);
+    try {
+      const response = await fetch(`/api/semesters/${semester.id}`, { method: "DELETE" });
+      if (!response.ok) throw new Error(await getErrorMessage(response));
+      setSuccessMessage(`La session « ${semester.name} » a été supprimée.`);
+      await loadCourses(false);
+    } catch (error) {
+      setPageError(error instanceof Error ? error.message : "Impossible de supprimer la session.");
+    } finally {
+      setDeletingSemesterId(null);
+    }
+  }
+
+  const normalizedSearch = search.trim().toLocaleLowerCase("fr");
+  const visibleSemesters = semesters
+    .map((semester) => ({
+      ...semester,
+      courses: semester.courses.filter((course) =>
+        `${course.name} ${course.code ?? ""} ${course.description ?? ""}`
+          .toLocaleLowerCase("fr")
+          .includes(normalizedSearch),
+      ),
+    }))
+    .filter((semester) => !normalizedSearch || semester.courses.length > 0);
+  const visibleCourseCount = visibleSemesters.reduce(
+    (total, semester) => total + semester.courses.length,
+    0,
+  );
+
   const courseCount = semesters.reduce(
     (total, semester) => total + semester.courses.length,
     0,
@@ -217,10 +253,10 @@ export function CourseManager() {
     <div className="courses-content">
       <div className="courses-intro">
         <div>
-          <p className="eyebrow">TON PARCOURS ACADÉMIQUE</p>
+          <p className="eyebrow">COURS</p>
           <h1>Mes cours</h1>
           <p className="courses-subtitle">
-            Retrouve tes cours, organisés par session.
+            Cours classés par session.
           </p>
         </div>
         <div className="courses-header-actions">
@@ -247,6 +283,24 @@ export function CourseManager() {
         <span className="summary-divider">·</span>
         {semesters.length} {semesters.length === 1 ? "session" : "sessions"}
       </div>
+
+      {courseCount > 0 && (
+        <label className="course-search">
+          <span aria-hidden="true">⌕</span>
+          <input
+            type="search"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Rechercher un cours ou un code…"
+            aria-label="Rechercher un cours ou un code"
+          />
+          {search && (
+            <button type="button" onClick={() => setSearch("")} aria-label="Effacer la recherche">
+              Effacer
+            </button>
+          )}
+        </label>
+      )}
 
       {successMessage && (
         <div className="courses-success" role="status">{successMessage}</div>
@@ -275,18 +329,18 @@ export function CourseManager() {
             Créer une session <span aria-hidden="true">＋</span>
           </button>
         </section>
-      ) : courseCount === 0 ? (
-        <section className="courses-empty">
-          <span className="empty-symbol" aria-hidden="true">▤</span>
-          <h2>Ton espace cours est prêt</h2>
-          <p>Ajoute ton premier cours pour commencer à organiser tes études.</p>
-          <button type="button" className="primary-button" onClick={openCreateForm}>
-            Ajouter un cours <span aria-hidden="true">＋</span>
-          </button>
-        </section>
       ) : (
         <div className="semester-list">
-          {semesters.map((semester) => (
+          {normalizedSearch && visibleCourseCount === 0 ? (
+            <section className="courses-empty search-empty">
+              <span className="empty-symbol" aria-hidden="true">⌕</span>
+              <h2>Aucun cours trouvé</h2>
+              <p>Essaie un autre nom ou code de cours.</p>
+              <button type="button" className="secondary-button" onClick={() => setSearch("")}>
+                Effacer la recherche
+              </button>
+            </section>
+          ) : visibleSemesters.map((semester) => (
             <section className="semester-card" key={semester.id}>
               <header className="semester-heading">
                 <div>
@@ -297,13 +351,26 @@ export function CourseManager() {
                     {formatDate(semester.endDate)}
                   </p>
                 </div>
-                <span className="semester-count">
-                  {semester.courses.length} cours
-                </span>
+                <div className="semester-heading-actions">
+                  <span className="semester-count">
+                    {semester.courses.length} {semester.courses.length === 1 ? "cours" : "cours"}
+                  </span>
+                  {semester.courses.length === 0 && (
+                    <button
+                      type="button"
+                      className="course-action course-delete"
+                      onClick={() => void handleDeleteSemester(semester)}
+                      disabled={deletingSemesterId === semester.id}
+                      aria-label={`Supprimer la session ${semester.name}`}
+                    >
+                      {deletingSemesterId === semester.id ? "Suppression…" : "Supprimer"}
+                    </button>
+                  )}
+                </div>
               </header>
 
               {semester.courses.length === 0 ? (
-                <p className="semester-empty">Aucun cours dans cette session pour le moment.</p>
+                <p className="semester-empty">Aucun cours. Cette session peut être supprimée.</p>
               ) : (
                 <ul className="course-list">
                   {semester.courses.map((course) => (
@@ -377,7 +444,7 @@ export function CourseManager() {
 
             <form className="course-form" onSubmit={handleSubmit}>
               <label>
-                Nom du cours <span aria-hidden="true">*</span>
+                Nom du cours
                 <input
                   autoFocus
                   required
@@ -388,7 +455,7 @@ export function CourseManager() {
                 />
               </label>
               <label>
-                Session <span aria-hidden="true">*</span>
+                Session
                 <select
                   required
                   value={form.semesterId}
@@ -401,7 +468,7 @@ export function CourseManager() {
                 </select>
               </label>
               <label>
-                Code du cours <span className="field-optional">Facultatif</span>
+                Code du cours
                 <input
                   maxLength={30}
                   value={form.code}
@@ -409,17 +476,6 @@ export function CourseManager() {
                   placeholder="Ex. PHT-1001"
                 />
               </label>
-              <label>
-                Description <span className="field-optional">Facultative</span>
-                <textarea
-                  maxLength={2_000}
-                  rows={3}
-                  value={form.description}
-                  onChange={(event) => setForm({ ...form, description: event.target.value })}
-                  placeholder="Quelques détails sur ce cours…"
-                />
-              </label>
-
               {formError && <p className="form-error" role="alert">{formError}</p>}
 
               <div className="course-form-actions">

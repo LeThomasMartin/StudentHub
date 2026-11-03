@@ -3,6 +3,7 @@ import type { SemesterSummary } from "./course-types";
 
 export interface SemesterRepository {
   create(input: SemesterInput): Promise<SemesterSummary>;
+  deleteIfEmpty(id: string): Promise<boolean>;
 }
 
 export async function createSemester(
@@ -10,4 +11,11 @@ export async function createSemester(
   repository: SemesterRepository,
 ): Promise<SemesterSummary> {
   return repository.create(input);
+}
+
+export async function deleteEmptySemester(
+  id: string,
+  repository: SemesterRepository,
+): Promise<boolean> {
+  return repository.deleteIfEmpty(id);
 }

@@ -41,26 +41,40 @@ export function AppSidebar({ active }: { active: "home" | "courses" }) {
         <a className="nav-item" href="#"><span>✳</span> Révisions</a>
       </nav>
       <div className="sidebar-bottom">
-        <div className="settings-wrapper">
-          <button type="button" className="settings-button" aria-label="Ouvrir les paramètres" aria-expanded={settingsOpen} onClick={() => setSettingsOpen((open) => !open)} title="Paramètres">
-            <span aria-hidden="true">⚙</span>
-          </button>
-          {settingsOpen && (
-            <div className="settings-panel" role="dialog" aria-label="Paramètres de l'application">
-              <div className="settings-header">Paramètres</div>
-              <label className="settings-row">
-                <span>Mode sombre</span>
-                <button type="button" role="switch" aria-checked={darkMode} className={`toggle ${darkMode ? "is-on" : ""}`} onClick={toggleDarkMode} aria-label={darkMode ? "Désactiver le mode sombre" : "Activer le mode sombre"}>
-                  <span className="toggle-knob" />
-                </button>
-              </label>
-            </div>
-          )}
-        </div>
         <div className="profile">
           <span className="avatar">É</span>
           <span><strong>Mon espace</strong><small>Étudiant</small></span>
-          <span className="dots">···</span>
+          <div className="profile-menu-wrapper">
+            <button
+              type="button"
+              className="dots"
+              aria-label="Ouvrir les paramètres"
+              aria-expanded={settingsOpen}
+              aria-haspopup="dialog"
+              onClick={() => setSettingsOpen((open) => !open)}
+              title="Paramètres"
+            >
+              <span aria-hidden="true">···</span>
+            </button>
+            {settingsOpen && (
+              <div className="settings-panel" role="dialog" aria-label="Paramètres de l'application">
+                <div className="settings-header">Paramètres</div>
+                <label className="settings-row">
+                  <span>Mode sombre</span>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={darkMode}
+                    className={`toggle ${darkMode ? "is-on" : ""}`}
+                    onClick={toggleDarkMode}
+                    aria-label={darkMode ? "Désactiver le mode sombre" : "Activer le mode sombre"}
+                  >
+                    <span className="toggle-knob" />
+                  </button>
+                </label>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </aside>
