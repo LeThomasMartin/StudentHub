@@ -12,8 +12,8 @@ datasource db {
 model Semester {
   id        String   @id @default(uuid()) @db.Uuid
   name      String
-  startDate DateTime @db.Date @map("start_date")
-  endDate   DateTime @db.Date @map("end_date")
+  startDate DateTime @map("start_date") @db.Date
+  endDate   DateTime @map("end_date") @db.Date
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -23,15 +23,34 @@ model Semester {
 }
 
 model Course {
-  id          String   @id @default(uuid()) @db.Uuid
+  id          String     @id @default(uuid()) @db.Uuid
   name        String
   code        String?
   description String?
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  semesterId  String   @db.Uuid @map("semester_id")
-  semester    Semester @relation(fields: [semesterId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  semesterId  String     @map("semester_id") @db.Uuid
+  semester    Semester   @relation(fields: [semesterId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  documents   Document[]
 
   @@index([semesterId])
   @@map("courses")
+}
+
+model Document {
+  id               String   @id @default(uuid()) @db.Uuid
+  name             String   @db.VarChar(200)
+  originalFilename String   @map("original_filename") @db.VarChar(255)
+  extension        String   @db.VarChar(10)
+  mimeType         String   @map("mime_type") @db.VarChar(100)
+  size             BigInt
+  checksum         String   @db.Char(64)
+  storagePath      String   @map("storage_path") @db.VarChar(500)
+  courseId         String?  @map("course_id") @db.Uuid
+  course           Course?  @relation(fields: [courseId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  @@index([courseId])
+  @@map("documents")
 }
